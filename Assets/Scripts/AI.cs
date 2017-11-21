@@ -7,11 +7,13 @@ public class AI : MonoBehaviour{
 	//Baisc AI Script for use with unity object
 	SteeringAICore AICore;
 	Kinematic target;
+	Kinematic myKinematic;
 	KinematicSteeringOutput KSO;
 
 	//overloaded initializers
 	public void init(SteeringAICore AICore){
 		this.AICore=AICore;
+		this.myKinematic=GetComponent<Mover> ().myKinematic;
 	}
 
 	public void init(SteeringAICore AICore, Kinematic target){
@@ -62,11 +64,7 @@ public class AI : MonoBehaviour{
 		return this.KSO;
 	}
 
-	//allows setting the max speed and max rotation allowed by this AI
-	public void setSpeed(float maxSpeed, float maxRotation){
-		AICore.Maxspeed = maxSpeed;
-		AICore.Maxrotation = maxRotation;
+	public void setAccel(float accel){
+		AICore.MaxAccel = accel;
 	}
-
-
 }

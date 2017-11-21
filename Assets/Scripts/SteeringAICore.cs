@@ -147,7 +147,6 @@ public class Seek : SteeringAICore{
 
 public class Flee : Seek{
 
-
 	protected override Vector3 getTargetVector (Vector3 charPos, Vector3 targetPos)
 	{
 		return charPos - targetPos;

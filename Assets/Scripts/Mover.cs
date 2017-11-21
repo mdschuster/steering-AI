@@ -11,7 +11,7 @@ public class Mover : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		myAI = GetComponent<AI> ();
+
 	}
 
 	// Update is called once per frame
@@ -44,11 +44,18 @@ public class Mover : MonoBehaviour {
 	}
 
 	public void init(){
+		myAI = GetComponent<AI> ();
 		myKinematic=new Kinematic();
 		myKinematic.Position = this.transform.position;
 		myKinematic.Velocity = new Vector3 (0f, 0f, 0f);
 		myKinematic.Rotation = 0f;
 		myKinematic.Orientation = 0f;
+	}
+
+	//allows setting the max speed and max rotation allowed by this AI
+	public void setSpeed(float maxSpeed, float maxRotation, float maxAccel){
+		myKinematic.MaxSpeed = maxSpeed;
+		myAI.setAccel(maxAccel);
 	}
 
 }

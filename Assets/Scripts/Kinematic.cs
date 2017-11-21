@@ -9,6 +9,8 @@ public class Kinematic {
 	Vector3 velocity;
 	float rotation;
 
+	float maxSpeed;
+
 
 	public void update(KinematicSteeringOutput steering, float dt){
 		//update position and orientation using velocity
@@ -18,6 +20,11 @@ public class Kinematic {
 		//and the velocity and rotation using acceleration
 		velocity += steering.Linear * dt;
 		rotation += steering.Angular * dt;
+
+		//make sure we don't exceed the max speed
+		if (velocity.magnitude > maxSpeed) {
+			velocity = velocity.normalized* maxSpeed;
+		}
 	}
 
 	public Vector3 Position {
@@ -53,6 +60,15 @@ public class Kinematic {
 		}
 		set {
 			rotation = value;
+		}
+	}
+
+	public float MaxSpeed {
+		get {
+			return maxSpeed;
+		}
+		set {
+			maxSpeed = value;
 		}
 	}
 }
