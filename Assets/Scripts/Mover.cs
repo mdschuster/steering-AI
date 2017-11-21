@@ -56,6 +56,7 @@ public class Mover : MonoBehaviour {
 	public void setSpeed(float maxSpeed, float maxRotation, float maxAccel){
 		myKinematic.MaxSpeed = maxSpeed;
 		myAI.setAccel(maxAccel);
+		myAI.setMaxSpeed (maxSpeed);
 	}
 
 }

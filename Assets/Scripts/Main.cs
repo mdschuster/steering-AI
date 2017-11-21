@@ -12,8 +12,8 @@ public class Main : MonoBehaviour {
 
 		//world = new World ();
 
-		block1 = GameObject.Find ("Cube1");
-		block2 = GameObject.Find ("Cube2");
+		block1 = GameObject.Find ("Cube1");  //red
+		block2 = GameObject.Find ("Cube2");  //blue
 		Mover b1Mover = block1.GetComponent<Mover> ();
 		Mover b2Mover = block2.GetComponent<Mover> ();
 		b1Mover.init ();
@@ -27,10 +27,10 @@ public class Main : MonoBehaviour {
 			Debug.Log ("NULL block character");
 		}
 
-		b1AI.setAI ("Seek");
+		b1AI.setAI ("Arrive");
 		b2AI.setAI ("Flee");
-		b1Mover.setSpeed (5f, 5f, 50f);
-		b2Mover.setSpeed (10f, 5f, 50f);
+		b1Mover.setSpeed (10f, 5f, 50f);
+		b2Mover.setSpeed (5f, 5f, 50f);
 		b1AI.setTarget (block2.GetComponent<Mover>().myKinematic);
 		b2AI.setTarget (block1.GetComponent<Mover> ().myKinematic);
 

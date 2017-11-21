@@ -51,7 +51,7 @@ public class AI : MonoBehaviour{
 		} else if (AICore == "Flee") {
 			this.AICore = new Flee ();
 		} else {
-			this.AICore = new Seek ();
+			this.AICore = new Arrive ();
 		}
 	}
 
@@ -66,5 +66,9 @@ public class AI : MonoBehaviour{
 
 	public void setAccel(float accel){
 		AICore.MaxAccel = accel;
+	}
+
+	public void setMaxSpeed(float speed){
+		AICore.Maxspeed = speed;
 	}
 }

@@ -12,8 +12,9 @@ public abstract class SteeringAICore : MonoBehaviour {
 	float maxspeed=10f;
 	float maxrotation=5f;
 	float maxAccel=2f;
-	float radius=0.1f;
-	float timeToTarget=0.5f;
+	float slowRadius = 10f;
+	float radius=2f;
+	float timeToTarget=0.1f;
 
 	protected abstract Vector3 getTargetVector (Vector3 charPos, Vector3 targetPos);
 	protected abstract Vector3 getAccel (KinematicSteeringOutput steering);
@@ -92,6 +93,15 @@ public abstract class SteeringAICore : MonoBehaviour {
 			timeToTarget = value;
 		}
 	}
+
+	public float SlowRadius {
+		get {
+			return slowRadius;
+		}
+		set {
+			slowRadius = value;
+		}
+	}
 }
 
 public class Seek : SteeringAICore{
@@ -152,5 +162,34 @@ public class Flee : Seek{
 		return charPos - targetPos;
 	}
 
+}
+
+public class Arrive : Seek{
+	protected override Vector3 getAccel (KinematicSteeringOutput steering)
+	{
+		float distance = steering.Linear.magnitude;
+		Vector3 direction = steering.Linear;
+		float speed;
+		if (distance == base.Radius)
+			return new Vector3 (0f, 0f, 0f);
+
+		if (distance > base.SlowRadius) {
+			speed = base.Maxspeed;
+		}
+		else {
+			speed = base.Maxspeed * distance / base.SlowRadius;
+		}
+
+		Vector3 vel = new Vector3(0f,0f,0f);
+		vel=direction.normalized*speed;
+
+		steering.Linear = vel - base.Character.Velocity;
+		steering.Linear /= TimeToTarget;
+
+		if (steering.Linear.magnitude > base.MaxAccel) {
+			steering.Linear = steering.Linear.normalized * base.MaxAccel;
+		}
+		return steering.Linear;
+	}
 }
 
