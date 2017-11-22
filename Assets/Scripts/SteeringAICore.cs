@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class SteeringAICore : MonoBehaviour {
+public abstract class SteeringAICore {
 
 	//holds data for char and target
 	Kinematic character;
@@ -12,7 +12,7 @@ public abstract class SteeringAICore : MonoBehaviour {
 	float maxspeed=10f;
 	float maxrotation=5f;
 	float maxAccel=2f;
-	float slowRadius = 10f;
+	float slowRadius = 5f;
 	float radius=2f;
 	float timeToTarget=0.1f;
 
@@ -22,7 +22,7 @@ public abstract class SteeringAICore : MonoBehaviour {
 	public abstract KinematicSteeringOutput getSteering (Kinematic character, Kinematic target);
 
 
-	public float getNewOrientation(KinematicSteeringOutput steering){
+	public virtual float getNewOrientation(KinematicSteeringOutput steering){
 		if (this.character.Velocity.magnitude == 0) {
 			return (float)Mathf.Atan2 (steering.Linear.x, steering.Linear.z);
 		} else {
@@ -165,12 +165,13 @@ public class Flee : Seek{
 }
 
 public class Arrive : Seek{
+
 	protected override Vector3 getAccel (KinematicSteeringOutput steering)
 	{
 		float distance = steering.Linear.magnitude;
 		Vector3 direction = steering.Linear;
 		float speed;
-		if (distance == base.Radius)
+		if (distance < base.Radius)
 			return new Vector3 (0f, 0f, 0f);
 
 		if (distance > base.SlowRadius) {
@@ -179,7 +180,6 @@ public class Arrive : Seek{
 		else {
 			speed = base.Maxspeed * distance / base.SlowRadius;
 		}
-
 		Vector3 vel = new Vector3(0f,0f,0f);
 		vel=direction.normalized*speed;
 

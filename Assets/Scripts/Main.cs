@@ -31,8 +31,8 @@ public class Main : MonoBehaviour {
 		b2AI.setAI ("Flee");
 		b1Mover.setSpeed (10f, 5f, 50f);
 		b2Mover.setSpeed (5f, 5f, 50f);
-		b1AI.setTarget (block2.GetComponent<Mover>().myKinematic);
-		b2AI.setTarget (block1.GetComponent<Mover> ().myKinematic);
+		b1AI.setTarget (b2Mover.myKinematic);
+		b2AI.setTarget (b1Mover.myKinematic);
 
 	}
 
